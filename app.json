@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "fa21-tiger",
+    "slug": "fa21-tiger",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "fa21-tiger"
+}
