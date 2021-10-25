@@ -7,9 +7,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from './src/views/Home';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { text } from './src/styles';
-import { NavBar } from './src/components/NavBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator()
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,22 +27,34 @@ export default function App() {
   return <>
     <StatusBar style="auto" />
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{
+      <Tab.Navigator initialRouteName="Home" screenOptions={{
         headerTitleStyle: text.title,
-        headerShadowVisible: false,
-        contentStyle: { backgroundColor: 'white' },
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          return <View style={{ width: size, height: size, backgroundColor: color}}></View>
+        },
+        tabBarStyle: {
+          // Without this it seems the icons cause a scrollbar
+          overflow: 'hidden'
+        }
       }}>
-        <Stack.Screen
+        <Tab.Screen
           name="Home"
           component={Home}
         />
-      </Stack.Navigator>
+        <Tab.Screen
+          name="Mood"
+          component={Home}
+        />
+        <Tab.Screen
+          name="Tracking"
+          component={Home}
+        />
+        <Tab.Screen
+          name="Analytics"
+          component={Home}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
-    <NavBar views={[
-      { label: 'Home' },
-      { label: 'Mood' },
-      { label: 'Tasks' },
-      { label: 'Analytics' },
-    ]} onSelect={() => {}}></NavBar>
   </>
 }

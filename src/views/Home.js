@@ -1,8 +1,7 @@
-import React from 'react';
-import { Text, View } from "react-native";
-import { text } from "../styles";
+import React from 'react'
+import { Text, View } from 'react-native'
 
-export function Home() {
+export function Home ({ navigation }) {
   return (
     <View>
       <Text>Hi</Text>
