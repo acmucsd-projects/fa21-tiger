@@ -1,21 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useFonts, PTSans_400Regular, PTSans_700Bold } from '@expo-google-fonts/pt-sans';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Home } from './src/views/Home';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    PTSans_400Regular, PTSans_700Bold
+  })
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! ahhh</Text>
+    <SafeAreaProvider>
       <StatusBar style="auto" />
-    </View>
+      {/* Prevent status bar from covering the app https://stackoverflow.com/a/49247517 */}
+      <SafeAreaView>
+        <NavigationContainer>
+          <Text>help, why doesn't anything show</Text>
+          <Text>help, why doesn't anything show</Text>
+          <Text>help, why doesn't anything show</Text>
+          <Text>help, why doesn't anything show</Text>
+          <Stack.Navigator initialRouteName="Home" style={{ flex: 1 }}>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
