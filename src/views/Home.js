@@ -5,7 +5,6 @@ import { text } from "../styles";
 export function Home() {
   return (
     <View>
-      <Text style={text.title}>Hi</Text>
       <Text>Hi</Text>
     </View>
   )

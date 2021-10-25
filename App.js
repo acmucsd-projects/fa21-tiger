@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from './src/views/Home';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { text } from './src/styles';
+import { NavBar } from './src/components/NavBar';
 
 const Stack = createNativeStackNavigator()
 
@@ -22,24 +24,25 @@ export default function App() {
     )
   }
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar style="auto" />
-      {/* Prevent status bar from covering the app https://stackoverflow.com/a/49247517 */}
-      <SafeAreaView>
-        <NavigationContainer>
-          <Text>help, why doesn't anything show</Text>
-          <Text>help, why doesn't anything show</Text>
-          <Text>help, why doesn't anything show</Text>
-          <Text>help, why doesn't anything show</Text>
-          <Stack.Navigator initialRouteName="Home" style={{ flex: 1 }}>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+  return <>
+    <StatusBar style="auto" />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{
+        headerTitleStyle: text.title,
+        headerShadowVisible: false,
+        contentStyle: { backgroundColor: 'white' },
+      }}>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+    <NavBar views={[
+      { label: 'Home' },
+      { label: 'Mood' },
+      { label: 'Tasks' },
+      { label: 'Analytics' },
+    ]} onSelect={() => {}}></NavBar>
+  </>
 }
