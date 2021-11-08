@@ -8,9 +8,10 @@ import { BackButton } from '../buttons/BackButton'
 function TitleBar ({ title, action, onBack }) {
 
   return (
-    <SafeAreaView style={[colours.text, colours.backing, shadows.smallShadow, styles.titleBar]}>
+    <SafeAreaView style={[colours.backing, shadows.smallShadow, styles.titleBar]}>
       <BackButton onPress={onBack} />
-      <Text style={[text.title, styles.title]}>{title}</Text>
+      <Text style={[colours.text, text.title, styles.title]}>{title}</Text>
+      {/* Insert placeholder if no action button; may have to resize this for that ELONGATED done button */}
       {action ?? <View style={{width: 40}}></View>}
     </SafeAreaView>
   )

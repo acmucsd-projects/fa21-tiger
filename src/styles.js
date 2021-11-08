@@ -55,7 +55,7 @@ export const colours = StyleSheet.create({
     backgroundColor: '#2DE381'
   },
 })
-export const lightBacking = [secondary, primary]
+export const lightBacking = [primary, secondary]
 
 export const shadows = StyleSheet.create({
   smallShadow: {
