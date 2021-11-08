@@ -8,8 +8,9 @@ import { Home } from './src/views/Home';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { text } from './src/styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,37 +25,29 @@ export default function App() {
     )
   }
 
-  return <>
+  return <SafeAreaProvider>
     <StatusBar style="auto" />
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home" screenOptions={{
-        headerTitleStyle: text.title,
-        tabBarShowLabel: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          return <View style={{ width: size, height: size, backgroundColor: color}}></View>
-        },
-        tabBarStyle: {
-          // Without this it seems the icons cause a scrollbar
-          overflow: 'hidden'
-        }
+      <Stack.Navigator initialRouteName="Home" screenOptions={{
+        headerShown: false
       }}>
-        <Tab.Screen
+        <Stack.Screen
           name="Home"
           component={Home}
         />
-        <Tab.Screen
+        <Stack.Screen
           name="Mood"
           component={Home}
         />
-        <Tab.Screen
+        <Stack.Screen
           name="Tracking"
           component={Home}
         />
-        <Tab.Screen
+        <Stack.Screen
           name="Analytics"
           component={Home}
         />
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
-  </>
+  </SafeAreaProvider>
 }
