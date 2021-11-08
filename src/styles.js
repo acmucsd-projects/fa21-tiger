@@ -1,40 +1,36 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native'
 
 export const text = StyleSheet.create({
   title: {
     fontFamily: 'PTSans_700Bold',
-    fontSize: 30,
+    fontSize: 30
   },
   subtitle: {
     fontFamily: 'PTSans_700Bold',
-    fontSize: 24,
+    fontSize: 24
   },
   body: {
     fontFamily: 'PTSans_400Regular',
-    fontSize: 18,
+    fontSize: 18
   },
   detail: {
     fontFamily: 'PTSans_400Regular',
-    fontSize: 14,
-  },
-
-
-
-
+    fontSize: 14
+  }
 })
 
-const secondary = '#67B3FA'
-const primary = '#1955EF'
+export const secondary = '#67B3FA'
+export const primary = '#1955EF'
 export const textColour = 'rgba(0, 0, 0, 0.7216)'
 export const colours = StyleSheet.create({
   backing: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF'
   },
   secondary: {
     backgroundColor: secondary
   },
   primary: {
-    backgroundColor: primary,
+    backgroundColor: primary
   },
   text: {
     color: textColour
@@ -53,7 +49,7 @@ export const colours = StyleSheet.create({
   },
   positive: {
     backgroundColor: '#2DE381'
-  },
+  }
 })
 export const lightBacking = [primary, secondary]
 
@@ -61,10 +57,10 @@ export const shadows = StyleSheet.create({
   smallShadow: {
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowRadius: 4,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
-    elevation: 3, // guesstimate
+    elevation: 3 // guesstimate
   }
 })

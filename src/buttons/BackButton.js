@@ -3,6 +3,9 @@ import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import Svg, { Line } from 'react-native-svg'
 import { textColour } from '../styles'
 
+/**
+ * The < icon button in the Figma
+ */
 export function BackButton ({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
