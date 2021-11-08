@@ -6,33 +6,30 @@ import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
 
-export function Home ({ navigation }) {
+export function Journal ({ navigation }) {
   return (
-    <BaseView navigation={navigation}>
+    <BaseView title='My Journal' navigation={navigation}>
       <Text style={[text.subtitle, colours.whiteTextOnBacking]}>
-        Good morning, Tony!
+        Welcome back!
       </Text>
       <Text style={[text.body, colours.whiteTextOnBacking]}>
-        Ready to take on the world?
+        Feel free to write about your thoughts and feelings here anytime you
+        want.
       </Text>
-      <Card
-        style={styles.card}
-        right={<ArrowIcon />}
-        onPress={() => {
-          navigation.navigate('Journal')
-        }}
-      >
-        <Text style={[text.subtitle, colours.text]}>View my journal</Text>
+      <Card style={styles.card} right={<ArrowIcon />} onPress={() => {
+        navigation.navigate('Details')
+      }}>
+        <Text style={[text.subtitle, colours.text]}>Start a new entry</Text>
         <Text style={[text.body, colours.text]}>
-          Write freely about your thoughts
+          How are you feeling today?
         </Text>
       </Card>
       <Card style={styles.card}>
-        <Text style={[text.subtitle, colours.text]}>Sleep 8 Hours</Text>
-        <Text style={[text.body, colours.text]}>7h 30m today • Streak: 0</Text>
+        <Text style={[text.subtitle, colours.text]}>Happy</Text>
+        <Text style={[text.body, colours.text]}>Today at 12:11pm</Text>
       </Card>
       <Text style={[text.detail, colours.whiteTextOnBacking, styles.hint]}>
-        Swipe left to skip • Swipe right to complete
+        Tap a card to view or edit an entry.
       </Text>
     </BaseView>
   )

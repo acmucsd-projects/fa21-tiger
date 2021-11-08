@@ -21,15 +21,18 @@ function TitleBar ({ title, action, onBack }) {
 /**
  * Template for each view that provides a title bar
  *
- * - `title` - text to show in the title bar
- * - `action` - thing to show on top right, maybe a done button or edit button
+ * - `navigation` - React Native navigation gives each view a `navigation` prop. Give it to BaseView so that its back button works
+ * - `title` - text to show in the title bar (optional - if omitted, there is no title bar)
+ * - `action` - thing to show on top right, maybe a done button or edit button (optional)
  * - `children` - content of view
  */
-export function BaseView ({ title, action, children }) {
+export function BaseView ({ navigation, title, action, children }) {
   return (
     <View style={[colours.whiteTextOnBacking, text.body, styles.wrapper]}>
       <LinearGradient colors={lightBacking} style={styles.background} />
-      {title && <TitleBar title={title} action={action} onBack={console.log} />}
+      {title && <TitleBar title={title} action={action} onBack={() => {
+        navigation.goBack()
+      }} />}
       <SafeAreaView style={styles.content}>{children}</SafeAreaView>
     </View>
   )
