@@ -9,6 +9,8 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { text } from './src/styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Journal } from './src/views/Journal';
+import { Details } from './src/views/Details';
 
 const Stack = createNativeStackNavigator()
 
@@ -36,16 +38,12 @@ export default function App() {
           component={Home}
         />
         <Stack.Screen
-          name="Mood"
-          component={Home}
+          name="Journal"
+          component={Journal}
         />
         <Stack.Screen
-          name="Tracking"
-          component={Home}
-        />
-        <Stack.Screen
-          name="Analytics"
-          component={Home}
+          name="Details"
+          component={Details}
         />
       </Stack.Navigator>
     </NavigationContainer>
