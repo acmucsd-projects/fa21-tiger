@@ -5,31 +5,22 @@ import { BaseView } from '../components/BaseView'
 import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
-import { EditButton } from '../buttons/EditButton'
 
-export function Details ({ navigation }) {
+export function EditEntry ({ navigation }) {
   return (
-    <BaseView
-      title='Entry Details'
-      navigation={navigation}
-      action={
-        <EditButton
-          onPress={() => {
-            navigation.navigate('EditEntry')
-          }}
-        />
-      }
-    >
+    <BaseView title='Edit Entry' navigation={navigation}>
       <Card style={styles.card}>
-        <Text style={[text.subtitle, colours.text]}>Happy</Text>
-        <Text style={[text.body, colours.text]}>Today at 12:11pm</Text>
+        <Text style={[text.body, colours.text]}>What’s your mood?</Text>
       </Card>
-      <Card style={styles.content}>
+      <Card style={[styles.card, styles.content]}>
         <Text style={[text.body, colours.text]}>
           I’m feeling really great today! I finished all of my chores early and
           got a lot of extra time to work on my designs. I hope I can do this
           more often, it’s nice to have more time for my projects!
         </Text>
+      </Card>
+      <Card style={styles.card} right={<ArrowIcon />}>
+        <Text style={[text.body, colours.text]}>Delete Entry</Text>
       </Card>
     </BaseView>
   )
@@ -39,7 +30,8 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 10
   },
-  content: {
-    padding: 10
+  moodRate: {
+    padding: 10,
+    paddingTop: 5
   }
 })

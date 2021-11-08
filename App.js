@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Journal } from './src/views/Journal';
 import { Details } from './src/views/Details';
+import { EditEntry } from './src/views/EditEntry';
 
 const Stack = createNativeStackNavigator()
 
@@ -44,6 +45,10 @@ export default function App() {
         <Stack.Screen
           name="Details"
           component={Details}
+        />
+        <Stack.Screen
+          name="EditEntry"
+          component={EditEntry}
         />
       </Stack.Navigator>
     </NavigationContainer>
