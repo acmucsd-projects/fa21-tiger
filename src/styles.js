@@ -25,6 +25,7 @@ export const text = StyleSheet.create({
 
 const secondary = '#67B3FA'
 const primary = '#1955EF'
+export const textColour = 'rgba(0, 0, 0, 0.7216)'
 export const colours = StyleSheet.create({
   backing: {
     backgroundColor: '#FFFFFF',
@@ -36,7 +37,7 @@ export const colours = StyleSheet.create({
     backgroundColor: primary,
   },
   text: {
-    color: 'rgba(0, 0, 0, 0.7216)'
+    color: textColour
   },
   cardBacking: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)'
