@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   background: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
