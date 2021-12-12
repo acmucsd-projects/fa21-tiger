@@ -5,10 +5,21 @@ import { BaseView } from '../components/BaseView'
 import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
+import { ApproveButton } from '../buttons/ApproveButton'
 
 export function EditEntry ({ navigation }) {
   return (
-    <BaseView title='Edit Entry' navigation={navigation}>
+    <BaseView
+      title='Edit Entry'
+      navigation={navigation}
+      action={
+        <ApproveButton
+          onPress={() => {
+            navigation.navigate('Details')
+          }}
+        />
+      }
+    >
       <Card style={styles.card}>
         <Text style={[text.body, colours.text]}>What’s your mood?</Text>
       </Card>
@@ -19,7 +30,13 @@ export function EditEntry ({ navigation }) {
           more often, it’s nice to have more time for my projects!
         </Text>
       </Card>
-      <Card style={styles.card} right={<ArrowIcon />}>
+      <Card
+        style={styles.card}
+        right={<ArrowIcon />}
+        onPress={() => {
+          console.log('DELETE lol')
+        }}
+      >
         <Text style={[text.body, colours.text]}>Delete Entry</Text>
       </Card>
     </BaseView>

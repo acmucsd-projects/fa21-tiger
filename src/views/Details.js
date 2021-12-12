@@ -6,6 +6,7 @@ import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
 import { EditButton } from '../buttons/EditButton'
+import { Happiness } from '../components/Happiness'
 
 export function Details ({ navigation }) {
   return (
@@ -20,7 +21,7 @@ export function Details ({ navigation }) {
         />
       }
     >
-      <Card style={styles.card}>
+      <Card style={styles.card} left={<Happiness happiness={8} />}>
         <Text style={[text.subtitle, colours.text]}>Happy</Text>
         <Text style={[text.body, colours.text]}>Today at 12:11pm</Text>
       </Card>
