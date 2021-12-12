@@ -5,10 +5,15 @@ import { BaseView } from '../components/BaseView'
 import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
+import { Logo } from '../components/Logo'
 
 export function Home ({ navigation }) {
   return (
     <BaseView navigation={navigation}>
+      <View style={[styles.topBar]}>
+        <Logo />
+        <Text style={[text.title, colours.whiteTextOnBacking, styles.title]}>Menta</Text>
+      </View>
       <Text style={[text.subtitle, colours.whiteTextOnBacking]}>
         Good morning, Tony!
       </Text>
@@ -45,5 +50,12 @@ const styles = StyleSheet.create({
   hint: {
     textAlign: 'center',
     marginTop: 10
+  },
+  topBar: {
+    flexDirection: 'row',
+    marginBottom: 30
+  },
+  title: {
+    marginLeft: 15
   }
 })

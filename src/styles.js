@@ -21,6 +21,7 @@ export const text = StyleSheet.create({
 
 export const secondary = '#67B3FA'
 export const primary = '#1955EF'
+export const greyOnWhite = '#9E9E9E'
 export const textColour = 'rgba(0, 0, 0, 0.7216)'
 export const colours = StyleSheet.create({
   backing: {
@@ -39,7 +40,7 @@ export const colours = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.9)'
   },
   greyOnWhite: {
-    backgroundColor: '#9E9E9E'
+    backgroundColor: greyOnWhite
   },
   whiteTextOnBacking: {
     color: '#FFFFFF'
