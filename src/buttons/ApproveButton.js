@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import Svg, { Line } from 'react-native-svg'
-import { colours, shadows } from '../styles'
+import { colours, shadows, white } from '../styles'
 
 /**
  * The < icon button in the Figma
@@ -14,7 +14,7 @@ export function ApproveButton ({ onPress }) {
         width={26.67}
         height={20}
         strokeWidth={2.5}
-        stroke='#FFFFFF'
+        stroke={white}
         strokeLinecap='round'
       >
         <Line x1={1.77} y1={10.48} x2={9.52} y2={18.23} />

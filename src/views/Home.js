@@ -6,10 +6,12 @@ import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
 import { Logo } from '../components/Logo'
+import { UnsavedDialog } from '../components/UnsavedDialog'
 
 export function Home ({ navigation }) {
   return (
     <BaseView navigation={navigation}>
+      <UnsavedDialog />
       <View style={[styles.topBar]}>
         <Logo />
         <Text style={[text.title, colours.whiteTextOnBacking, styles.title]}>Menta</Text>

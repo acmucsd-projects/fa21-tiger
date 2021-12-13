@@ -23,9 +23,10 @@ export const secondary = '#67B3FA'
 export const primary = '#1955EF'
 export const greyOnWhite = '#9E9E9E'
 export const textColour = 'rgba(0, 0, 0, 0.7216)'
+export const white = '#FFFFFF'
 export const colours = StyleSheet.create({
   backing: {
-    backgroundColor: '#FFFFFF'
+    backgroundColor: white
   },
   secondary: {
     backgroundColor: secondary
@@ -43,13 +44,16 @@ export const colours = StyleSheet.create({
     backgroundColor: greyOnWhite
   },
   whiteTextOnBacking: {
-    color: '#FFFFFF'
+    color: white
   },
   danger: {
     backgroundColor: '#C51800'
   },
   positive: {
     backgroundColor: '#2DE381'
+  },
+  overlayBackground: {
+    backgroundColor: 'rgba(0, 0, 0, 0.25)'
   }
 })
 export const lightBacking = [primary, secondary]
