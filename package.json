@@ -4,6 +4,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "deploy": "expo build:web && gh-pages --dist web-build/",
     "start": "react-native start"
   },
   "dependencies": {
@@ -28,7 +29,9 @@
     "react-native-web": "0.17.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "gh-pages": "^3.2.3"
   },
+  "homepage": "https://acmucsd-projects.github.io/fa21-tiger/",
   "private": true
 }
