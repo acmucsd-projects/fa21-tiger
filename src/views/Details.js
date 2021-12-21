@@ -30,7 +30,11 @@ export function Details ({ route, navigation }) {
             onPress={() => {
               navigation.navigate('EditEntry', {
                 journalId,
-                initJournalData: journal
+                initJournalData: {
+                  mood: journal.mood,
+                  intensity: journal.moodIntensity,
+                  description: journal.description
+                }
               })
             }}
           />

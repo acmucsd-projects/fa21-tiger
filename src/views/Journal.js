@@ -44,7 +44,7 @@ export function Journal ({ navigation }) {
       </Card>
       {journals ? (
         <>
-          {journals.map(({ id, mood, moodIntensity, modified }) => {
+          {journals.map(({ id, mood, moodIntensity, created }) => {
             return (
               <Card
                 style={styles.card}
@@ -56,7 +56,7 @@ export function Journal ({ navigation }) {
               >
                 <Text style={[text.subtitle, colours.text]}>{mood}</Text>
                 <Text style={[text.body, colours.text]}>
-                  {modified.toLocaleString()}
+                  {created.toLocaleString()}
                 </Text>
               </Card>
             )

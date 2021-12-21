@@ -1,11 +1,26 @@
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native'
 import Svg, { Line } from 'react-native-svg'
 import { colours, shadows, text, white } from '../styles'
+import { useAndroidBackCancel } from '../utils'
 
-export function UnsavedDialog ({}) {
+export const UnsavedDialogContext = createContext({
+  exitAction: null,
+  setExitAction: () => {}
+})
+
+export function UnsavedDialog ({ onCancel, onExit }) {
   return (
-    <View style={[styles.background, colours.overlayBackground]}>
+    <View style={[styles.wrapper]}>
+      <TouchableWithoutFeedback onPress={onCancel}>
+        <View style={[styles.background, colours.overlayBackground]} />
+      </TouchableWithoutFeedback>
       <View style={[styles.dialog, colours.backing, shadows.smallShadow]}>
         <Text style={[text.subtitle]}>Heads up!</Text>
         <Text style={[styles.body, text.body]}>
@@ -14,6 +29,7 @@ export function UnsavedDialog ({}) {
         <View style={styles.buttons}>
           <TouchableOpacity
             style={[styles.button, colours.greyOnWhite, shadows.smallShadow]}
+            onPress={onCancel}
           >
             <Text style={[colours.whiteTextOnBacking, text.body]}>Cancel</Text>
             <Svg
@@ -30,6 +46,7 @@ export function UnsavedDialog ({}) {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, colours.danger, shadows.smallShadow]}
+            onPress={onExit}
           >
             <Text style={[colours.whiteTextOnBacking, text.body]}>
               Exit Without Saving
@@ -41,8 +58,30 @@ export function UnsavedDialog ({}) {
   )
 }
 
+export function useUnsavedChanges (navigation, hasUnsavedChanges) {
+  const { exitAction, setExitAction } = useContext(UnsavedDialogContext)
+
+  // https://reactnavigation.org/docs/preventing-going-back
+  useEffect(() => {
+    const handleBeforeRemove = e => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault()
+        setExitAction(() => {
+          navigation.dispatch(e.data.action)
+        })
+      }
+    }
+    navigation.addListener('beforeRemove', handleBeforeRemove)
+    return () => {
+      navigation.removeListener('beforeRemove', handleBeforeRemove)
+    }
+  }, [navigation, hasUnsavedChanges])
+
+  useAndroidBackCancel(exitAction, () => setExitAction(null))
+}
+
 const styles = StyleSheet.create({
-  background: {
+  wrapper: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -51,6 +90,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 100
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh'
   },
   dialog: {
     width: 303,

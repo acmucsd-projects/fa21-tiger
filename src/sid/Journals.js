@@ -96,7 +96,7 @@ export async function deleteEntry (journalId) {
     'journal:list',
     await AsyncStorage.getItem('journal:list').then(ids => {
       if (ids) {
-        ids
+        return ids
           .split(',')
           .filter(id => id !== journalId)
           .join(',')

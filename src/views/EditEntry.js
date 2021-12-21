@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Text, View, StyleSheet, TextInput, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { BaseView } from '../components/BaseView'
@@ -9,7 +9,12 @@ import { ApproveButton } from '../buttons/ApproveButton'
 import { TextArea } from '../components/TextArea'
 import { MinusButton, PlusButton } from '../buttons/PlusMinusButtons'
 import { DropdownIcon } from '../buttons/DropdownIcon'
-import { save } from '../sid/Journals'
+import { deleteEntry, save } from '../sid/Journals'
+import {
+  UnsavedDialogContext,
+  useUnsavedChanges
+} from '../components/UnsavedDialog'
+import { useCallback } from 'react/cjs/react.development'
 
 /**
  * Journal entry editor.
@@ -17,13 +22,25 @@ import { save } from '../sid/Journals'
 export function EditEntry ({ route, navigation }) {
   const {
     journalId,
-    initJournalData = { mood: 'Happy', moodIntensity: 5, description: '' }
+    initJournalData = { mood: 'Happy', intensity: 5, description: '' }
   } = route.params
 
   const [mood, setMood] = useState(initJournalData.mood)
-  const [intensity, setIntensity] = useState(initJournalData.moodIntensity)
+  const [intensity, setIntensity] = useState(initJournalData.intensity)
   const [rawIntensity, setRawIntensity] = useState(null)
   const [description, setDescription] = useState(initJournalData.description)
+
+  const unsavedChanges =
+    mood !== initJournalData.mood ||
+    rawIntensity !== null || // Don't save if there is still unprocessed numbers in the intensity
+    intensity !== initJournalData.intensity ||
+    description !== initJournalData.description
+  // Kind of hacky way to make it not show the dialog after pressing save/delete
+  const canExit = useRef(false)
+  const hasUnsavedChanges = useCallback(() => {
+    return unsavedChanges && !canExit.current
+  }, [unsavedChanges])
+  useUnsavedChanges(navigation, hasUnsavedChanges)
 
   return (
     <BaseView
@@ -32,6 +49,7 @@ export function EditEntry ({ route, navigation }) {
       action={
         <ApproveButton
           onPress={async () => {
+            canExit.current = true
             const id = await save(
               { mood, moodIntensity: intensity, description },
               journalId
@@ -105,15 +123,19 @@ export function EditEntry ({ route, navigation }) {
           onChange={({ nativeEvent: { text } }) => setDescription(text)}
         />
       </Card>
-      <Card
-        style={styles.card}
-        right={<ArrowIcon />}
-        onPress={() => {
-          console.log('DELETE lol')
-        }}
-      >
-        <Text style={[text.body, colours.text]}>Delete Entry</Text>
-      </Card>
+      {journalId && (
+        <Card
+          style={styles.card}
+          right={<ArrowIcon />}
+          onPress={async () => {
+            canExit.current = true
+            await deleteEntry(journalId)
+            navigation.navigate('Journal')
+          }}
+        >
+          <Text style={[text.body, colours.text]}>Delete Entry</Text>
+        </Card>
+      )}
     </BaseView>
   )
 }
