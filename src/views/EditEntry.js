@@ -9,11 +9,21 @@ import { ApproveButton } from '../buttons/ApproveButton'
 import { TextArea } from '../components/TextArea'
 import { MinusButton, PlusButton } from '../buttons/PlusMinusButtons'
 import { DropdownIcon } from '../buttons/DropdownIcon'
+import { save } from '../sid/Journals'
 
-export function EditEntry ({ navigation }) {
-  const [value, setValue] = useState(
-    'I’m feeling really great today! I finished all of my chores early and got a lot of extra time to work on my designs. I hope I can do this more often, it’s nice to have more time for my projects!'
-  )
+/**
+ * Journal entry editor.
+ */
+export function EditEntry ({ route, navigation }) {
+  const {
+    journalId,
+    initJournalData = { mood: 'Happy', moodIntensity: 5, description: '' }
+  } = route.params
+
+  const [mood, setMood] = useState(initJournalData.mood)
+  const [intensity, setIntensity] = useState(initJournalData.moodIntensity)
+  const [rawIntensity, setRawIntensity] = useState(null)
+  const [description, setDescription] = useState(initJournalData.description)
 
   return (
     <BaseView
@@ -21,8 +31,16 @@ export function EditEntry ({ navigation }) {
       navigation={navigation}
       action={
         <ApproveButton
-          onPress={() => {
-            navigation.navigate('Details')
+          onPress={async () => {
+            const id = await save(
+              { mood, moodIntensity: intensity, description },
+              journalId
+            )
+            if (journalId) {
+              navigation.goBack()
+            } else {
+              navigation.replace('Details', { journalId: id })
+            }
           }}
         />
       }
@@ -42,9 +60,26 @@ export function EditEntry ({ navigation }) {
           How intense is that mood? (1-10)
         </Text>
         <View style={styles.selector}>
-          <MinusButton />
+          <MinusButton
+            onPress={() => {
+              setIntensity(intensity => Math.max(intensity - 1, 1))
+            }}
+          />
           <TextInput
-            value='5'
+            value={rawIntensity ?? intensity}
+            onChange={({ nativeEvent: { text } }) => {
+              setRawIntensity(text.replace(/\D/g, ''))
+            }}
+            onBlur={() => {
+              setIntensity(intensity => {
+                setRawIntensity(null)
+                if (rawIntensity === '' || !Number.isFinite(+rawIntensity)) {
+                  return intensity
+                } else {
+                  return Math.min(Math.max(Math.round(+rawIntensity), 1), 10)
+                }
+              })
+            }}
             keyboardType='number-pad'
             style={[
               styles.mood,
@@ -54,7 +89,11 @@ export function EditEntry ({ navigation }) {
               shadows.smallShadow
             ]}
           />
-          <PlusButton />
+          <PlusButton
+            onPress={() => {
+              setIntensity(intensity => Math.min(intensity + 1, 10))
+            }}
+          />
         </View>
       </Card>
       <Card style={[styles.card, styles.content]}>
@@ -62,8 +101,8 @@ export function EditEntry ({ navigation }) {
         <TextArea
           style={[styles.textArea, text.body, colours.text, colours.backing]}
           borderVertical={2}
-          value={value}
-          onChange={({ nativeEvent: { text } }) => setValue(text)}
+          value={description}
+          onChange={({ nativeEvent: { text } }) => setDescription(text)}
         />
       </Card>
       <Card

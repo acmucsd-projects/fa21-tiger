@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { BaseView } from '../components/BaseView'
@@ -6,8 +6,21 @@ import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
 import { Happiness } from '../components/Happiness'
+import { list } from '../sid/Journals'
 
+/**
+ * Journal entry list.
+ */
 export function Journal ({ navigation }) {
+  const [journals, setJournals] = useState(null)
+
+  useEffect(() => {
+    list().then(journals => {
+      // Sort by most recently created first
+      setJournals(journals.sort((a, b) => b.created - a.created))
+    })
+  }, [])
+
   return (
     <BaseView title='My Journal' navigation={navigation}>
       <Text style={[text.subtitle, colours.whiteTextOnBacking]}>
@@ -21,7 +34,7 @@ export function Journal ({ navigation }) {
         style={styles.card}
         right={<ArrowIcon />}
         onPress={() => {
-          navigation.navigate('EditEntry')
+          navigation.navigate('EditEntry', {})
         }}
       >
         <Text style={[text.subtitle, colours.text]}>Start a new entry</Text>
@@ -29,19 +42,34 @@ export function Journal ({ navigation }) {
           How are you feeling today?
         </Text>
       </Card>
-      <Card
-        style={styles.card}
-        left={<Happiness happiness={8} />}
-        onPress={() => {
-          navigation.navigate('Details')
-        }}
-      >
-        <Text style={[text.subtitle, colours.text]}>Happy</Text>
-        <Text style={[text.body, colours.text]}>Today at 12:11pm</Text>
-      </Card>
-      <Text style={[text.detail, colours.whiteTextOnBacking, styles.hint]}>
-        Tap a card to view or edit an entry.
-      </Text>
+      {journals ? (
+        <>
+          {journals.map(({ id, mood, moodIntensity, modified }) => {
+            return (
+              <Card
+                style={styles.card}
+                left={<Happiness happiness={moodIntensity} />}
+                onPress={() => {
+                  navigation.navigate('Details', { journalId: id })
+                }}
+                key={id}
+              >
+                <Text style={[text.subtitle, colours.text]}>{mood}</Text>
+                <Text style={[text.body, colours.text]}>
+                  {modified.toLocaleString()}
+                </Text>
+              </Card>
+            )
+          })}
+          <Text style={[text.detail, colours.whiteTextOnBacking, styles.hint]}>
+            Tap a card to view or edit an entry.
+          </Text>
+        </>
+      ) : (
+        <Text style={[text.detail, colours.whiteTextOnBacking, styles.hint]}>
+          Loading journals...
+        </Text>
+      )}
     </BaseView>
   )
 }
