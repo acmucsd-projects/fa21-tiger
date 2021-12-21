@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import Svg, { Line } from 'react-native-svg'
 import { textColour } from '../styles'
 

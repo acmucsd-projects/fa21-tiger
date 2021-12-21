@@ -1,7 +1,7 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import Svg, { Line, Path } from 'react-native-svg'
-import { colours, primary, shadows, textColour } from '../styles'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import Svg, { Line } from 'react-native-svg'
+import { colours, primary, shadows } from '../styles'
 
 function PlusMinusButton ({ onPress, isPlus }) {
   return (
@@ -25,15 +25,11 @@ function PlusMinusButton ({ onPress, isPlus }) {
 }
 
 export function PlusButton ({ onPress }) {
-  return (
-    <PlusMinusButton onPress={onPress} isPlus={true} />
-  )
+  return <PlusMinusButton onPress={onPress} isPlus={true} />
 }
 
 export function MinusButton ({ onPress }) {
-  return (
-    <PlusMinusButton onPress={onPress} isPlus={false} />
-  )
+  return <PlusMinusButton onPress={onPress} isPlus={false} />
 }
 
 const styles = StyleSheet.create({

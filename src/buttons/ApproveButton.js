@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import Svg, { Line } from 'react-native-svg'
 import { colours, shadows, white } from '../styles'
 
@@ -8,7 +8,10 @@ import { colours, shadows, white } from '../styles'
  */
 export function ApproveButton ({ onPress }) {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, colours.primary, shadows.smallShadow]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, colours.primary, shadows.smallShadow]}
+    >
       <Svg
         viewBox='0 0 26.67 20'
         width={26.67}
