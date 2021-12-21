@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Text, View, StyleSheet, TextInput, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { BaseView } from '../components/BaseView'
@@ -14,7 +14,6 @@ import {
   UnsavedDialogContext,
   useUnsavedChanges
 } from '../components/UnsavedDialog'
-import { useCallback } from 'react/cjs/react.development'
 
 /**
  * Journal entry editor.

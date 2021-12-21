@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import Svg, { Line, Polyline } from 'react-native-svg'
-import { primary, textColour } from '../styles'
+import Svg, { Polyline } from 'react-native-svg'
+import { primary } from '../styles'
 
 /**
  * The v downwards-pointing chevron icon on the dropdown cards

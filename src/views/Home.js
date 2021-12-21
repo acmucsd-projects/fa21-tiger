@@ -1,6 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
+import { Text, StyleSheet } from 'react-native'
 import { BaseView } from '../components/BaseView'
 import { colours, text } from '../styles'
 import { Card } from '../components/Card'

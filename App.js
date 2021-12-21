@@ -1,6 +1,6 @@
-import React, { createContext, useState } from 'react'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import {
   useFonts,
   PTSans_400Regular,
@@ -9,7 +9,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Home } from './src/views/Home'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Journal } from './src/views/Journal'
 import { Details } from './src/views/Details'
 import { EditEntry } from './src/views/EditEntry'
