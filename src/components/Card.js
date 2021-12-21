@@ -12,7 +12,7 @@ import { colours, shadows } from '../styles'
  * - `right` - content on the right side, like the arrow (optional)
  * - `onPress` - what to do when the card is pressed (optional)
  */
-export function Card ({ style, children, left, right, onPress }) {
+export function Card ({ style, flexStyle, children, left, right, onPress }) {
   const MaybePressable = onPress ? TouchableOpacity : View
   return (
     <MaybePressable
@@ -20,7 +20,7 @@ export function Card ({ style, children, left, right, onPress }) {
       onPress={onPress}
     >
       {left}
-      <View style={styles.content}>{children}</View>
+      <View style={[styles.content, flexStyle]}>{children}</View>
       {right}
     </MaybePressable>
   )

@@ -31,3 +31,9 @@ browser.
 - This assumes the phone and computer is on the same network, but this doesn't
   seem to work very well on RESNET-PROTECTED. You can alternatively select
   "Tunnel" in the developer tools, but supposedly this is slower.
+
+To deploy the web version of the app to GitHub Pages,
+
+```sh
+$ npm run deploy
+```
