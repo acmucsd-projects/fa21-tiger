@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native'
-import Svg, { Line } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
 import { colours, shadows, text, white } from '../styles'
 import { useAndroidBackCancel } from '../utils'
 
@@ -40,8 +40,7 @@ export function UnsavedDialog ({ onCancel, onExit }) {
               strokeWidth={3}
               strokeLinecap='round'
             >
-              <Line x1={2} y1={18} x2={18} y2={2} />
-              <Line x1={2} y1={2} x2={18} y2={18} />
+              <Path d='M 2 18 L 18 2 M 2 2 L 18 18' />
             </Svg>
           </TouchableOpacity>
           <TouchableOpacity
@@ -51,6 +50,16 @@ export function UnsavedDialog ({ onCancel, onExit }) {
             <Text style={[colours.whiteTextOnBacking, text.body]}>
               Exit Without Saving
             </Text>
+            <Svg
+              width={20}
+              height={20}
+              viewBox='0 0 20 20'
+              stroke={white}
+              strokeWidth={3}
+              strokeLinecap='round'
+            >
+              <Path d='M18 10.5L14.2619 14.2381 M18 10.5L14.3064 6.80637 M2 2.5L2 18.5 M2 2.5H10 M2 18.5H10 M18 10.5H10' />
+            </Svg>
           </TouchableOpacity>
         </View>
       </View>

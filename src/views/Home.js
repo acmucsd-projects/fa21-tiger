@@ -10,10 +10,7 @@ import { Logo } from '../components/Logo'
 export function Home ({ navigation }) {
   return (
     <BaseView navigation={navigation}>
-      <View style={[styles.topBar]}>
-        <Logo />
-        <Text style={[text.title, colours.whiteTextOnBacking, styles.title]}>Menta</Text>
-      </View>
+      <Logo style={[styles.logo]} />
       <Text style={[text.subtitle, colours.whiteTextOnBacking]}>
         Good morning, Tony!
       </Text>
@@ -51,11 +48,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10
   },
-  topBar: {
-    flexDirection: 'row',
-    marginBottom: 30
-  },
-  title: {
-    marginLeft: 15
+  logo: {
+    marginBottom: 10
   }
 })
