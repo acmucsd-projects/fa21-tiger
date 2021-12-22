@@ -46,15 +46,13 @@ export function EditEntry ({ route, navigation }) {
         <ApproveButton
           onPress={async () => {
             canExit.current = true
-            const id = await sid.journals.save(
+            await sid.journals.save(
               { mood, moodIntensity: intensity, description },
               journalId
             )
-            if (journalId) {
-              navigation.goBack()
-            } else {
-              navigation.replace('Details', { journalId: id })
-            }
+            // In the Figma, saving an entry takes you to the journal list
+            // rather than the journal details page.
+            navigation.navigate('Journal')
           }}
         />
       }

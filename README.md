@@ -1,3 +1,5 @@
+![Menta logo](./docs/logo.svg)
+
 ## Development
 
 After cloning the repository, install the dependencies:
