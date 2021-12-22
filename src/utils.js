@@ -1,7 +1,7 @@
 // @ts-check
 
 import { useFocusEffect } from '@react-navigation/native'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { BackHandler } from 'react-native'
 
 /**
@@ -32,4 +32,25 @@ export function useAndroidBackCancel (cancel, onCancel) {
       }
     }, [cancel])
   )
+}
+
+/**
+ * Re-renders the component when the screen gets back into focus. This is a hack
+ * because React Native Navigation, for some reason, doesn't do that, so the
+ * useEffect dependency list doesn't get refreshed.
+ *
+ * @param
+ * {import('@react-navigation/native-stack').NativeStackScreenProps<unknown>['navigation']}
+ * navigation
+ */
+export function useRerenderOnFocus (navigation) {
+  const [, setDummy] = useState(0)
+
+  useEffect(() => {
+    const unsubscriber = navigation.addListener('focus', () => {
+      // Trigger a re-render by changing the state.
+      setDummy(value => value + 1)
+    })
+    return unsubscriber
+  }, [navigation])
 }

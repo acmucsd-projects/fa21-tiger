@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Text, StyleSheet } from 'react-native'
 import { BaseView } from '../components/BaseView'
 import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { EditButton } from '../buttons/EditButton'
 import { Happiness } from '../components/Happiness'
-import { get } from '../sid/Journals'
+import { SidContext } from '../sid/Sid'
+import { useRerenderOnFocus } from '../utils'
 
 /**
  * Journal entry details.
@@ -13,10 +14,12 @@ import { get } from '../sid/Journals'
 export function Details ({ route, navigation }) {
   const { journalId } = route.params
   const [journal, setJournal] = useState(null)
+  const sid = useContext(SidContext)
 
   useEffect(() => {
-    get(journalId).then(setJournal)
-  }, [])
+    sid.journals.get(journalId).then(setJournal)
+  }, [sid.journals.lastEdited])
+  useRerenderOnFocus(navigation)
 
   return (
     <BaseView

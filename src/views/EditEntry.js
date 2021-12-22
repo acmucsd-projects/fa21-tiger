@@ -1,6 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 import { Text, View, StyleSheet, TextInput, Alert } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
 import { BaseView } from '../components/BaseView'
 import { colours, greyOnWhite, shadows, text } from '../styles'
 import { Card } from '../components/Card'
@@ -9,11 +8,8 @@ import { ApproveButton } from '../buttons/ApproveButton'
 import { TextArea } from '../components/TextArea'
 import { MinusButton, PlusButton } from '../buttons/PlusMinusButtons'
 import { DropdownIcon } from '../buttons/DropdownIcon'
-import { deleteEntry, save } from '../sid/Journals'
-import {
-  UnsavedDialogContext,
-  useUnsavedChanges
-} from '../components/UnsavedDialog'
+import { useUnsavedChanges } from '../components/UnsavedDialog'
+import { SidContext } from '../sid/Sid'
 
 /**
  * Journal entry editor.
@@ -24,6 +20,7 @@ export function EditEntry ({ route, navigation }) {
     initJournalData = { mood: 'Happy', intensity: 5, description: '' }
   } = route.params
 
+  const sid = useContext(SidContext)
   const [mood, setMood] = useState(initJournalData.mood)
   const [intensity, setIntensity] = useState(initJournalData.intensity)
   const [rawIntensity, setRawIntensity] = useState(null)
@@ -49,7 +46,7 @@ export function EditEntry ({ route, navigation }) {
         <ApproveButton
           onPress={async () => {
             canExit.current = true
-            const id = await save(
+            const id = await sid.journals.save(
               { mood, moodIntensity: intensity, description },
               journalId
             )
@@ -128,7 +125,7 @@ export function EditEntry ({ route, navigation }) {
           right={<ArrowIcon />}
           onPress={async () => {
             canExit.current = true
-            await deleteEntry(journalId)
+            await sid.journals.delete(journalId)
             navigation.navigate('Journal')
           }}
         >

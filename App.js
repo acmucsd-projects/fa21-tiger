@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Text, View } from 'react-native'
 import {
@@ -17,6 +17,7 @@ import {
   UnsavedDialog,
   UnsavedDialogContext
 } from './src/components/UnsavedDialog'
+import { Sid, SidContext } from './src/sid/Sid'
 
 const Stack = createNativeStackNavigator()
 
@@ -34,12 +35,17 @@ export default function App () {
     setExitAction
   })
 
+  const sid = useRef()
+  useEffect(() => {
+    sid.current = new Sid()
+  }, [])
+
   const [fontsLoaded] = useFonts({
     PTSans_400Regular,
     PTSans_700Bold
   })
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || !sid.current) {
     return (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <Text>Loading...</Text>
@@ -62,19 +68,21 @@ export default function App () {
         />
       )}
       <UnsavedDialogContext.Provider value={unsavedDialogContextValue}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName='Home'
-            screenOptions={{
-              headerShown: false
-            }}
-          >
-            <Stack.Screen name='Home' component={Home} />
-            <Stack.Screen name='Journal' component={Journal} />
-            <Stack.Screen name='Details' component={Details} />
-            <Stack.Screen name='EditEntry' component={EditEntry} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <SidContext.Provider value={sid.current}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName='Home'
+              screenOptions={{
+                headerShown: false
+              }}
+            >
+              <Stack.Screen name='Home' component={Home} />
+              <Stack.Screen name='Journal' component={Journal} />
+              <Stack.Screen name='Details' component={Details} />
+              <Stack.Screen name='EditEntry' component={EditEntry} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SidContext.Provider>
       </UnsavedDialogContext.Provider>
     </SafeAreaProvider>
   )

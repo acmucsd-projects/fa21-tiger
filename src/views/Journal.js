@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Text, StyleSheet } from 'react-native'
 import { BaseView } from '../components/BaseView'
 import { colours, text } from '../styles'
 import { Card } from '../components/Card'
 import { ArrowIcon } from '../buttons/ArrowIcon'
 import { Happiness } from '../components/Happiness'
-import { list } from '../sid/Journals'
+import { SidContext } from '../sid/Sid'
+import { useRerenderOnFocus } from '../utils'
 
 /**
  * Journal entry list.
  */
 export function Journal ({ navigation }) {
+  const sid = useContext(SidContext)
   const [journals, setJournals] = useState(null)
 
   useEffect(() => {
-    list().then(journals => {
+    sid.journals.list().then(journals => {
       // Sort by most recently created first
       setJournals(journals.sort((a, b) => b.created - a.created))
     })
-  }, [])
+  }, [sid.journals.lastEdited])
+  useRerenderOnFocus(navigation)
 
   return (
     <BaseView title='My Journal' navigation={navigation}>

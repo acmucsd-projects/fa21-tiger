@@ -1,5 +1,7 @@
+// @ts-check
+
 /**
- * Generates a unique ID. It will only contain base 10 digits.
+ * Generates a unique ID containing at least 10 base 10 digits.
  */
 export function uuid () {
   return `${Date.now()}${Math.random()
