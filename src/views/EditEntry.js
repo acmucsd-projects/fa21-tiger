@@ -11,6 +11,14 @@ import { DropdownIcon } from '../buttons/DropdownIcon'
 import { useUnsavedChanges } from '../components/UnsavedDialog'
 import { SidContext } from '../sid/Sid'
 
+function parseRawIntensity (rawIntensity, intensity) {
+  if (!rawIntensity || !Number.isFinite(+rawIntensity)) {
+    return intensity
+  } else {
+    return Math.min(Math.max(Math.round(+rawIntensity), 1), 10)
+  }
+}
+
 /**
  * Journal entry editor.
  */
@@ -47,7 +55,11 @@ export function EditEntry ({ route, navigation }) {
           onPress={async () => {
             canExit.current = true
             await sid.journals.save(
-              { mood, moodIntensity: intensity, description },
+              {
+                mood,
+                moodIntensity: parseRawIntensity(rawIntensity, intensity),
+                description
+              },
               journalId
             )
             // In the Figma, saving an entry takes you to the journal list
@@ -56,6 +68,7 @@ export function EditEntry ({ route, navigation }) {
           }}
         />
       }
+      hideBottomButtons
     >
       <Card
         style={styles.card}
@@ -78,18 +91,14 @@ export function EditEntry ({ route, navigation }) {
             }}
           />
           <TextInput
-            value={rawIntensity ?? intensity}
+            value={rawIntensity ?? intensity.toString()}
             onChange={({ nativeEvent: { text } }) => {
               setRawIntensity(text.replace(/\D/g, ''))
             }}
             onBlur={() => {
               setIntensity(intensity => {
                 setRawIntensity(null)
-                if (rawIntensity === '' || !Number.isFinite(+rawIntensity)) {
-                  return intensity
-                } else {
-                  return Math.min(Math.max(Math.round(+rawIntensity), 1), 10)
-                }
+                return parseRawIntensity(rawIntensity, intensity)
               })
             }}
             keyboardType='number-pad'

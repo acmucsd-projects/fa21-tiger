@@ -29,16 +29,26 @@ function TitleBar ({ title, action, onBack }) {
  *   title bar)
  * - `action` - thing to show on top right, maybe a done button or edit button
  *   (optional)
- * - `contentStyle` - style of content; can be used to remove padding
+ * - `hideBottomButtons` (false by default) - whether to hide the menu and
+ *   create buttons at the bottom
+ * - `noPadding` (false by default) - whether to include padding around the
+ *   content
+ * - `contentStyle` - other styles to apply to the content view
  * - `children` - content of view
  */
 export function BaseView ({
   navigation,
   title,
   action,
+  hideBottomButtons = false,
+  noPadding = false,
   contentStyle,
   children
 }) {
+  // SafeAreaView doesn't take into account where it's actually used, so if the
+  // title bar is claiming the top padding, then it'd repeat the padding for
+  // content.
+  const ContentView = title ? View : SafeAreaView
   return (
     <View style={[colours.whiteTextOnBacking, text.body, styles.wrapper]}>
       <LinearGradient colors={lightBacking} style={styles.background} />
@@ -51,24 +61,31 @@ export function BaseView ({
           }}
         />
       )}
-      <SafeAreaView style={[styles.content, contentStyle]}>
+      <ContentView
+        style={[
+          styles.content,
+          !noPadding && styles.contentPadding,
+          contentStyle
+        ]}
+      >
         {children}
-      </SafeAreaView>
-      <MenuButton style={[styles.bottomButton, styles.menu]} />
-      <CreateButton style={[styles.bottomButton, styles.create]} />
+      </ContentView>
+      {!hideBottomButtons && (
+        <>
+          <MenuButton style={[styles.bottomButton, styles.menu]} />
+          <CreateButton style={[styles.bottomButton, styles.create]} />
+        </>
+      )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   titleBar: {
-    height: 70,
     alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
     padding: 15
-  },
-  title: {
-    marginHorizontal: 'auto'
   },
 
   wrapper: {
@@ -83,8 +100,10 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   content: {
-    padding: 15,
     flex: 1
+  },
+  contentPadding: {
+    padding: 15
   },
 
   bottomButton: {

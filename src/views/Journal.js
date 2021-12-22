@@ -24,11 +24,7 @@ export function Journal ({ navigation }) {
   useRerenderOnFocus(navigation)
 
   return (
-    <BaseView
-      title='My Journal'
-      navigation={navigation}
-      contentStyle={styles.noPadding}
-    >
+    <BaseView title='My Journal' navigation={navigation} noPadding>
       <FlatList
         style={styles.content}
         data={journals ?? []}
@@ -83,9 +79,6 @@ export function Journal ({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  noPadding: {
-    padding: 0
-  },
   content: {
     padding: 15
   },
