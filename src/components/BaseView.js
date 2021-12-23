@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import { colours, lightBacking, shadows, text } from '../styles'
+import { colours, shadows, text } from '../styles'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BackButton } from '../buttons/BackButton'
 import { CreateButton } from '../buttons/CreateButton'
 import { MenuButton } from '../buttons/MenuButton'
 import { UnsavedDialog, UnsavedDialogContext } from './UnsavedDialog'
 import { CreateMenu } from './CreateMenu'
+import { LightBacking } from './LightBacking'
+import { Menu } from './Menu'
 
 function TitleBar ({ title, action, onBack }) {
   return (
@@ -60,6 +61,7 @@ export function BaseView ({
     setExitAction
   })
 
+  const [showingMenu, setShowingMenu] = useState(false)
   const [showingCreateMenu, setShowingCreateMenu] = useState(false)
 
   // SafeAreaView doesn't take into account where it's actually used, so if the
@@ -68,7 +70,7 @@ export function BaseView ({
   const ContentView = title ? View : SafeAreaView
   return (
     <View style={[colours.whiteTextOnBacking, text.body, styles.wrapper]}>
-      <LinearGradient colors={lightBacking} style={styles.background} />
+      <LightBacking />
       {title && (
         <TitleBar
           title={title}
@@ -102,13 +104,17 @@ export function BaseView ({
       </UnsavedDialogContext.Provider>
       {!hideBottomButtons && (
         <>
-          <MenuButton style={[styles.bottomButton, styles.menu]} />
+          <MenuButton
+            style={[styles.bottomButton, styles.menu]}
+            onPress={() => setShowingMenu(true)}
+          />
           <CreateButton
             style={[styles.bottomButton, styles.create]}
             onPress={() => setShowingCreateMenu(true)}
           />
         </>
       )}
+      {showingMenu && <Menu onClose={() => setShowingMenu(false)} />}
       {showingCreateMenu && (
         <CreateMenu
           onClose={() => setShowingCreateMenu(false)}
@@ -139,14 +145,6 @@ const styles = StyleSheet.create({
 
   wrapper: {
     flex: 1
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: -1
   },
   content: {
     flex: 1
