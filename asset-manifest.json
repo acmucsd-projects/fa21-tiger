@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/fa21-tiger/static/js/app.f8e7fbfe.chunk.js",
-    "app.js.map": "/fa21-tiger/static/js/app.f8e7fbfe.chunk.js.map",
+    "app.js": "/fa21-tiger/static/js/app.d7d0ca7b.chunk.js",
+    "app.js.map": "/fa21-tiger/static/js/app.d7d0ca7b.chunk.js.map",
     "runtime~app.js": "/fa21-tiger/static/js/runtime~app.f0a106b0.js",
     "runtime~app.js.map": "/fa21-tiger/static/js/runtime~app.f0a106b0.js.map",
-    "static/js/2.a6c39668.chunk.js": "/fa21-tiger/static/js/2.a6c39668.chunk.js",
-    "static/js/2.a6c39668.chunk.js.map": "/fa21-tiger/static/js/2.a6c39668.chunk.js.map",
+    "static/js/2.94f71007.chunk.js": "/fa21-tiger/static/js/2.94f71007.chunk.js",
+    "static/js/2.94f71007.chunk.js.map": "/fa21-tiger/static/js/2.94f71007.chunk.js.map",
     "fonts/PTSans_400Regular.ttf": "/fa21-tiger/./fonts/PTSans_400Regular.ttf",
     "fonts/PTSans_400Regular_Italic.ttf": "/fa21-tiger/./fonts/PTSans_400Regular_Italic.ttf",
     "fonts/PTSans_700Bold.ttf": "/fa21-tiger/./fonts/PTSans_700Bold.ttf",
@@ -13,11 +13,11 @@
     "index.html": "/fa21-tiger/index.html",
     "manifest.json": "/fa21-tiger/manifest.json",
     "serve.json": "/fa21-tiger/serve.json",
-    "static/js/2.a6c39668.chunk.js.LICENSE.txt": "/fa21-tiger/static/js/2.a6c39668.chunk.js.LICENSE.txt"
+    "static/js/2.94f71007.chunk.js.LICENSE.txt": "/fa21-tiger/static/js/2.94f71007.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.f0a106b0.js",
-    "static/js/2.a6c39668.chunk.js",
-    "static/js/app.f8e7fbfe.chunk.js"
+    "static/js/2.94f71007.chunk.js",
+    "static/js/app.d7d0ca7b.chunk.js"
   ]
 }
