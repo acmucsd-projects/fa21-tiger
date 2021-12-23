@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { colours, lightBacking, shadows, text } from '../styles'
@@ -6,6 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { BackButton } from '../buttons/BackButton'
 import { CreateButton } from '../buttons/CreateButton'
 import { MenuButton } from '../buttons/MenuButton'
+import { UnsavedDialog, UnsavedDialogContext } from './UnsavedDialog'
+import { CreateMenu } from './CreateMenu'
 
 function TitleBar ({ title, action, onBack }) {
   return (
@@ -45,6 +47,21 @@ export function BaseView ({
   contentStyle,
   children
 }) {
+  // This is kind of scuffed but position: fixed isn't supported by React Native
+  // apparently
+  const setExitAction = exitAction => {
+    setUnsavedDialogContextValue(({ setExitAction }) => ({
+      exitAction,
+      setExitAction
+    }))
+  }
+  const [unsavedDialogContextValue, setUnsavedDialogContextValue] = useState({
+    exitAction: null,
+    setExitAction
+  })
+
+  const [showingCreateMenu, setShowingCreateMenu] = useState(false)
+
   // SafeAreaView doesn't take into account where it's actually used, so if the
   // title bar is claiming the top padding, then it'd repeat the padding for
   // content.
@@ -61,20 +78,52 @@ export function BaseView ({
           }}
         />
       )}
-      <ContentView
-        style={[
-          styles.content,
-          !noPadding && styles.contentPadding,
-          contentStyle
-        ]}
-      >
-        {children}
-      </ContentView>
+      {unsavedDialogContextValue.exitAction && (
+        <UnsavedDialog
+          onCancel={() => {
+            setExitAction(null)
+          }}
+          onExit={() => {
+            unsavedDialogContextValue.exitAction()
+            setExitAction(null)
+          }}
+        />
+      )}
+      <UnsavedDialogContext.Provider value={unsavedDialogContextValue}>
+        <ContentView
+          style={[
+            styles.content,
+            !noPadding && styles.contentPadding,
+            contentStyle
+          ]}
+        >
+          {children}
+        </ContentView>
+      </UnsavedDialogContext.Provider>
       {!hideBottomButtons && (
         <>
           <MenuButton style={[styles.bottomButton, styles.menu]} />
-          <CreateButton style={[styles.bottomButton, styles.create]} />
+          <CreateButton
+            style={[styles.bottomButton, styles.create]}
+            onPress={() => setShowingCreateMenu(true)}
+          />
         </>
+      )}
+      {showingCreateMenu && (
+        <CreateMenu
+          onClose={() => setShowingCreateMenu(false)}
+          onNewJournal={() => {
+            setShowingCreateMenu(false)
+            navigation.reset({
+              index: 2,
+              routes: [
+                { name: 'Home' },
+                { name: 'Journal' },
+                { name: 'EditEntry', params: {} }
+              ]
+            })
+          }}
+        />
       )}
     </View>
   )

@@ -17,7 +17,6 @@ import { BackHandler } from 'react-native'
  * @see https://reactnavigation.org/docs/custom-android-back-button-handling
  */
 export function useAndroidBackCancel (cancel, onCancel) {
-  // TODO: I haven't tested this code
   useFocusEffect(
     useCallback(() => {
       if (cancel) {

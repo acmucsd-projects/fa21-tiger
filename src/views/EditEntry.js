@@ -8,7 +8,7 @@ import { ApproveButton } from '../buttons/ApproveButton'
 import { TextArea } from '../components/TextArea'
 import { MinusButton, PlusButton } from '../buttons/PlusMinusButtons'
 import { DropdownIcon } from '../buttons/DropdownIcon'
-import { useUnsavedChanges } from '../components/UnsavedDialog'
+import { CheckUnsavedChanges } from '../components/UnsavedDialog'
 import { SidContext } from '../sid/Sid'
 
 function parseRawIntensity (rawIntensity, intensity) {
@@ -44,7 +44,6 @@ export function EditEntry ({ route, navigation }) {
   const hasUnsavedChanges = useCallback(() => {
     return unsavedChanges && !canExit.current
   }, [unsavedChanges])
-  useUnsavedChanges(navigation, hasUnsavedChanges)
 
   return (
     <BaseView
@@ -70,6 +69,10 @@ export function EditEntry ({ route, navigation }) {
       }
       hideBottomButtons
     >
+      <CheckUnsavedChanges
+        navigation={navigation}
+        hasUnsavedChanges={hasUnsavedChanges}
+      />
       <Card
         style={styles.card}
         right={<DropdownIcon />}

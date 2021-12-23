@@ -1,26 +1,21 @@
 import React, { createContext, useContext, useEffect } from 'react'
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
 import { colours, shadows, text, white } from '../styles'
-import { useAndroidBackCancel } from '../utils'
+import { ShadedOverlay } from './ShadedOverlay'
 
 export const UnsavedDialogContext = createContext({
   exitAction: null,
-  setExitAction: () => {}
+  setExitAction: () => {
+    throw new Error(
+      'Context provider was not given, so useContext is using the default value.'
+    )
+  }
 })
 
 export function UnsavedDialog ({ onCancel, onExit }) {
   return (
-    <View style={[styles.wrapper]}>
-      <TouchableWithoutFeedback onPress={onCancel}>
-        <View style={[styles.background, colours.overlayBackground]} />
-      </TouchableWithoutFeedback>
+    <ShadedOverlay onClose={onCancel} wrapperStyle={styles.overlayWrapper}>
       <View style={[styles.dialog, colours.backing, shadows.smallShadow]}>
         <Text style={[text.subtitle]}>Heads up!</Text>
         <Text style={[styles.body, text.body]}>
@@ -63,12 +58,12 @@ export function UnsavedDialog ({ onCancel, onExit }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ShadedOverlay>
   )
 }
 
-export function useUnsavedChanges (navigation, hasUnsavedChanges) {
-  const { exitAction, setExitAction } = useContext(UnsavedDialogContext)
+export function CheckUnsavedChanges ({ navigation, hasUnsavedChanges }) {
+  const { setExitAction } = useContext(UnsavedDialogContext)
 
   // https://reactnavigation.org/docs/preventing-going-back
   useEffect(() => {
@@ -86,26 +81,13 @@ export function useUnsavedChanges (navigation, hasUnsavedChanges) {
     }
   }, [navigation, hasUnsavedChanges])
 
-  useAndroidBackCancel(exitAction, () => setExitAction(null))
+  return null
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
+  overlayWrapper: {
     justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 100
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh'
+    alignItems: 'center'
   },
   dialog: {
     width: 303,
